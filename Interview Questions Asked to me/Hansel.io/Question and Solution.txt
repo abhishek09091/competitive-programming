@@ -1,0 +1,128 @@
+Question 1:
+We have an obfuscation mechanism in JAVA that renames functions and classes to short names. For example
+
+Class "android.support.v7.block.Moderator" gets converted to the obfuscated name "android.support.v7.d.q" and
+Function "android.support.v7.block.Moderator.showDialog(String, String)" gets converted to obfuscated "android.support.v7.d.q.a(String, String)"
+
+Given a mapping file of the following format and a fully qualified function name, write a program to find out the obfuscated/minified fully qualified name for that function.
+
+Mapping.txt
+
+android.support.v4.text.LayoutManager -> android.support.v4.d.p:
+	int getLayoutDirectionFromLocale() -> a
+	int getLayoutDirectionFromFirstChar() -> b
+	int getLayoutDirectionFromLocator() -> c
+android.support.v4.text.SupportManager -> android.support.v4.d.q:
+	int getSupportDirection() -> a
+	int getSupportLocation(int) -> b
+	int getName() -> c
+android.support.v7.block.Moderator -> android.support.v7.d.q:
+	void showDialog() -> a
+	void showName() -> b
+	void showDialog(String) -> a
+	void showDialog(String, String) -> a
+
+Sample Input: 
+mapping.txt
+android.support.v4.text.LayoutManager.getLayoutDirectionFromLocale(), android.support.v7.block.Moderator.showDialog(String, String)
+
+Output: 
+android.support.v4.d.p.a()
+android.support.v7.d.q.a()
+
+Please note that a typical file will have more than 100,000 rows and the number of strings in the actual input will be in the order of 1000.
+
+
+
+Solution:
+
+
+String  storeInMap(String str , Map<String,String> map){
+	
+String [] splittedArray = str.split(“ ”);
+map.put(splittedArray[0],splittedArray[2]);
+return  splittedArray[2];	
+}
+
+void storeFunctionName(String str, String key, Map<String,Map<String,String>> functionMap){
+	
+
+	String minifiedStr = “”;
+	String functionStr = “”;
+	
+	int  i = str.length()-1;
+  	while(!str.charAt(i).equals(“ ”)){
+		Character ch = str.charAt(i);
+		minified = ch.toString() + minified;
+}
+
+i  = 0;
+while(!str.charAt(i).equals(“(”)){
+	Character ch = str.charAt(i);
+	functionStr += ch.toString(i);
+}
+
+String [] functionSplit = functionStr.split(“ ”);
+
+	if(functionMap.contains(key)){
+		Map<String,String> temp = functionMap.get(key);
+		temp.put(functionSplit[1],minifiedStr);
+}else{
+	Map<String,String> temp = new HashMap<>();
+	temp.put(functionSplit[1],minifiedStr);
+	functionMap.put(key,temp);
+}
+
+}
+
+public static void main(String args[]){
+	
+	Map<String,String> map = new HashMap<>();
+	Map<String,Map<String,String>> functionMap = new HashMap<>();
+	
+	//While reading from the file
+	while(hasNextLine()){
+		String str = file.next();
+		String returnResult = “”;
+		if(str.contains(“.”)){
+			returnResult = storeInMap(str , map);
+}else{
+storeFunctionName(str, returnResult, functionMap);
+}
+}
+
+	Scanner sc = new Scanner(System.in);
+
+Integer input  = sc.nextInt();
+sc.nextLine();
+while(input-- > 0 ){
+
+		String str = sc.nextLine();
+		
+		String packageName = “”;
+		String functionName = “”;
+		int i =0;
+		while(!str.charAt(i).equals(“(”)){
+			Character ch = str.charAt(i);
+			packageName += ch.toString();
+}
+
+String removingUnwantedString = “”;
+i  =  packageName.length()-1;
+		
+while(!str.charAt(i).equals(“.”)){
+	Character ch = str.charAt(i);
+removingUnwantedString = ch.toString() + removingUnwantedString;
+}
+
+packageName = packageName.replace(“.”+removingUnwantedString,””);
+
+String minimizedString = map.get(packageName);
+String minimizedFunctionString = map.get(removingUnwantedString);
+
+str = str.replace(packageName,minimizedString);
+str = str.replace(removingUnwantedString,minimizedFunctionString);
+System.out.println(str);
+}
+
+}
