@@ -7,10 +7,10 @@ vector<int> delta_encode(vector<int> numbers) {
     int previous = numbers[i - 1];
     int present = numbers[i];
     int diff = present - previous;
-    if (diff <= -127 || diff >= 127) {
-      result.push_back(-128);
+    if (diff <= -127 && diff >= 127) {
       result.push_back(diff);
     } else {
+      result.push_back(-128);
       result.push_back(diff);
     }
   }
