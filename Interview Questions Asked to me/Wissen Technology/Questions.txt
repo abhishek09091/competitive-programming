@@ -1,0 +1,9 @@
+Questions Asked :
+
+
+https://medium.com/@eranda/running-median-with-heaps-829522330e8a
+
+https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/
+
+https://www.hackerrank.com/challenges/ctci-find-the-running-median/problem
+
