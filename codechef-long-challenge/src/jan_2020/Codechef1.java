@@ -34,7 +34,7 @@ public class Codechef1 {
 			
 			Integer ans = sc.nextInt();	
 			
-			System.out.println(Long.MAX_VALUE);
+			//System.out.println(Long.MAX_VALUE);
 			
 		}
 		
